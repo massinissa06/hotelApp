@@ -1,0 +1,242 @@
+Index: src/app/home/home.page.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/app/home/home.page.ts	(revision e064cf0474f3f3a7fd4eedd1445174e2ee0e57ef)
++++ src/app/home/home.page.ts	(date 1584624818177)
+@@ -1,12 +1,33 @@
+-import { Component } from '@angular/core';
++import {Component} from '@angular/core';
+ 
+ @Component({
+-  selector: 'app-home',
+-  templateUrl: 'home.page.html',
+-  styleUrls: ['home.page.scss'],
++    selector: 'app-home',
++    templateUrl: 'home.page.html',
++    styleUrls: ['home.page.scss'],
+ })
+ export class HomePage {
++    connected = false;
++
++    listForProtocol = ['http', 'https'];
++    public perfectUrl = false;
++    public odooUrl;
++    public selectedProtocol;
++    private dbList: Array<{
++        dbName: string;
++    }> = [];
++    private selectedDatabase;
++    private email;
++    private password;
+ 
+-  constructor() {}
++    constructor() {
+ 
++    }
++
++    logout() {
++
++    }
++
++    VerifierUrl() {
++
++    }
+ }
+Index: src/app/home/home.page.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/app/home/home.page.html	(revision e064cf0474f3f3a7fd4eedd1445174e2ee0e57ef)
++++ src/app/home/home.page.html	(date 1584625279634)
+@@ -1,20 +1,52 @@
+ <ion-header [translucent]="true">
+-  <ion-toolbar>
+-    <ion-title>
+-      Blank
+-    </ion-title>
+-  </ion-toolbar>
++    <ion-toolbar color="primary">
++        <ion-title>
++            Hotel
++        </ion-title>
++
++        <ion-buttons slot="end" *ngIf="connected">
++            <ion-button color="light" (click)="logout()">
++                <ion-icon name="log-out" slot="icon-only"></ion-icon>
++            </ion-button>
++        </ion-buttons>
++    </ion-toolbar>
+ </ion-header>
++<ion-content>
++
++    <div>
++        <img src="../../assets/company_logo.jpg"
++             height="113"
++             width="180"
++             alt="No Image"/>
++    </div>
++    <ion-card>
++        <ion-card-content>
++            <ion-item class="border-box">
++                <ion-label>Select Protocol</ion-label>
++                <ion-select [(ngModel)]="selectedProtocol" name="dbNames">
++                    <ion-select-option *ngFor="let item of listForProtocol"
++                                       value="{{  item }}"
++                    >{{ item  }}</ion-select-option>
+ 
+-<ion-content [fullscreen]="true">
+-  <ion-header collapse="condense">
+-    <ion-toolbar>
+-      <ion-title size="large">Blank</ion-title>
+-    </ion-toolbar>
+-  </ion-header>
++                </ion-select>
++            </ion-item>
++            <ion-item class="border-box">
++                <ion-label>Odoo Url</ion-label>
++                <ion-input [(ngModel)]="odooUrl" type="url" name="odooUrl"></ion-input>
++            </ion-item>
+ 
+-  <div id="container">
+-    <strong>Ready to create an app?</strong>
+-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+-  </div>
++            <ion-item class="flex" lines="none">
++
++                <ion-button shape="round" (click)="VerifierUrl()" slot="end">
++                    <ion-icon slot="start" name="key-outline"></ion-icon>
++                    Connexion
++                </ion-button>
++            </ion-item>
++            <div [hidden]="!perfectUrl">
++
++            </div>
++
++        </ion-card-content>
++    </ion-card>
++
+ </ion-content>
+Index: src/app/home/home.page.scss
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/app/home/home.page.scss	(revision e064cf0474f3f3a7fd4eedd1445174e2ee0e57ef)
++++ src/app/home/home.page.scss	(date 1584624976882)
+@@ -28,4 +28,26 @@
+ 
+ ion-content ion-toolbar {
+   --background: translucent;
+-}
+\ No newline at end of file
++}
++.background {
++  height: 100%;
++  width: 100%;
++  background-color: #3ebffb;
++}
++
++ion-card.card {
++  margin-top: 10%;
++  border-radius: 10px;
++}
++
++.border-box {
++  border: 1px solid white;
++  border-radius: 10px;
++  color: black;
++  background-color: rgb(236, 236, 236);
++}
++.flex {
++  display: flex;
++  justify-content: space-between;
++}
++
+diff --git src/assets/company_logo.jpg src/assets/company_logo.jpg
+new file mode 100644
+index 0000000000000000000000000000000000000000..a46508890895b76de5a365b09466becec61da58d
+GIT binary patch
+literal 4327
+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
+UkFkr7oS74=Ap-dS8bzM^H$SyAZU6uP
+
